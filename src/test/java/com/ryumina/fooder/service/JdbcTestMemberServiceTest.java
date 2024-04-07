@@ -10,17 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.data.jdbc.AutoConfigureDataJdbc;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.Optional;
-
 @SpringBootTest
 @AutoConfigureDataJdbc
 class JdbcTestMemberServiceTest {
 
     @Autowired
     JdbcTestMemberRepository jdbcTestMemberRepository;
+    @Autowired
+    JdbcTestMemberService jdbcTestMemberService;
 
     @BeforeEach
-    void initData() {
+    void deleteAllData() {
         jdbcTestMemberRepository.deleteAll();
     }
 
@@ -31,7 +31,7 @@ class JdbcTestMemberServiceTest {
         JdbcTestMember member = new JdbcTestMember("01088888888", "김옥수수", "옥수수");
 
         // when
-        JdbcTestMember createdMember = jdbcTestMemberRepository.insert(member);
+        JdbcTestMember createdMember = jdbcTestMemberService.createMember(member);
 
         // then
         Assertions.assertThat(createdMember.getPhoneNumber()).isEqualTo(member.getPhoneNumber());
@@ -42,12 +42,13 @@ class JdbcTestMemberServiceTest {
     void createAndFindMember() {
         // given
         JdbcTestMember member = new JdbcTestMember("01077777777", "류찰밥", "찰밥");
-        JdbcTestMember insertedMember = jdbcTestMemberRepository.insert(member);
+        JdbcTestMember createdMember = jdbcTestMemberService.createMember(member);
 
         // when
-        JdbcTestMember findMember = jdbcTestMemberRepository.findById(insertedMember.getPhoneNumber()).get();
+        JdbcTestMember findMember = jdbcTestMemberService.findMember(createdMember.getPhoneNumber());
 
         // then
+        Assertions.assertThat(findMember).isNotNull();
         Assertions.assertThat(findMember.getPhoneNumber()).isEqualTo(member.getPhoneNumber());
     }
 
@@ -56,11 +57,11 @@ class JdbcTestMemberServiceTest {
     void updateMember() {
         // given
         JdbcTestMember member = new JdbcTestMember("01077777777", "류찰밥", "찰밥");
-        JdbcTestMember insertedMember = jdbcTestMemberRepository.insert(member);
+        JdbcTestMember createdMember = jdbcTestMemberService.createMember(member);
 
         // when
-        insertedMember.setNickName("찰밥_수정수정");
-        JdbcTestMember updatedMember = jdbcTestMemberRepository.save(insertedMember);
+        createdMember.setNickName("찰밥_수정수정");
+        JdbcTestMember updatedMember = jdbcTestMemberService.updateMember(createdMember);
 
         // then
         Assertions.assertThat(updatedMember.getNickName()).isEqualTo("찰밥_수정수정");
@@ -73,11 +74,11 @@ class JdbcTestMemberServiceTest {
         JdbcTestMember member = new JdbcTestMember("01077777777", "류찰밥", "찰밥");
 
         // when
-        jdbcTestMemberRepository.deleteById(member.getPhoneNumber());
-        Optional<JdbcTestMember> isDeletedMember = jdbcTestMemberRepository.findById(member.getPhoneNumber());
+        jdbcTestMemberService.deleteMember(member.getPhoneNumber());
+        JdbcTestMember deletedMember = jdbcTestMemberService.findMember(member.getPhoneNumber());
 
         // then
-        Assertions.assertThat(isDeletedMember.isPresent()).isFalse();
+        Assertions.assertThat(deletedMember).isNull();
     }
 
 }
