@@ -1,9 +1,14 @@
 package com.ryumina.fooder.repository;
 
 import com.ryumina.fooder.domain.JdbcTestMember;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
+import com.ryumina.fooder.infra.Member;
 
-@Repository
-public interface JdbcTestMemberRepository extends CrudRepository<JdbcTestMember, String>, WithInsert<JdbcTestMember> {
+public interface JdbcTestMemberRepository {
+    JdbcTestMember insert(Member member);
+
+    JdbcTestMember update(Member member);
+
+    JdbcTestMember findById(Long id);
+
+    void deleteById(Long id);
 }
