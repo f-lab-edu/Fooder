@@ -1,8 +1,6 @@
-package com.ryumina.fooder.repository;
+package com.ryumina.fooder.infra;
 
-import com.ryumina.fooder.infra.Member;
-
-public interface JdbcTestMemberRepository {
+public interface MemberService {
     Member insert(Member member);
 
     Member update(Member member);

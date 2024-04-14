@@ -1,8 +1,8 @@
 package com.ryumina.fooder.repository;
 
 import com.ryumina.fooder.domain.JdbcTestMember;
-import com.ryumina.fooder.infra.Member;
 import com.ryumina.fooder.exception.FooderBusinessException;
+import com.ryumina.fooder.infra.Member;
 import com.ryumina.fooder.infra.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -17,38 +17,44 @@ public class JdbcTestMemberRepositoryImpl implements JdbcTestMemberRepository {
 
     @Transactional
     @Override
-    public JdbcTestMember insert(Member member) {
-        Member createMember = memberRepository.save(member);
+    public Member insert(Member member) {
+        JdbcTestMember jdbcTestMember = JdbcTestMember.builder()
+                                                      .phoneNumber(member.getPhoneNumber())
+                                                      .name(member.getName())
+                                                      .nickName(member.getNickName())
+                                                      .build();
 
-        return convertToJdbcTestMember(createMember);
+        JdbcTestMember createMember = memberRepository.save(jdbcTestMember);
+
+        return convertToMember(createMember);
     }
 
     @Transactional
     @Override
-    public JdbcTestMember update(Member member) {
-        Optional<Member> findMember = memberRepository.findById(member.getId());
+    public Member update(Member member) {
+        Optional<JdbcTestMember> findMember = memberRepository.findById(member.getId());
 
         if (findMember.isEmpty()) {
             throw new FooderBusinessException("존재하지 않는 회원입니다. ID= " + member.getId());
         }
 
-        Member savedMember = memberRepository.save(Member.builder()
-                                                         .id(findMember.get().getId())
-                                                         .phoneNumber(member.getPhoneNumber())
-                                                         .name(member.getName())
-                                                         .nickName(member.getNickName())
-                                                         .build());
-        return convertToJdbcTestMember(savedMember);
+        JdbcTestMember savedMember = memberRepository.save(JdbcTestMember.builder()
+                                                                         .id(findMember.get().getId())
+                                                                         .phoneNumber(member.getPhoneNumber())
+                                                                         .name(member.getName())
+                                                                         .nickName(member.getNickName())
+                                                                         .build());
+        return convertToMember(savedMember);
     }
 
     @Override
-    public JdbcTestMember findById(Long id) {
-        Optional<Member> findMember = memberRepository.findById(id);
+    public Member findById(Long id) {
+        Optional<JdbcTestMember> findMember = memberRepository.findById(id);
 
         if (findMember.isPresent()) {
-            Member foundMember = findMember.get();
+            JdbcTestMember foundMember = findMember.get();
 
-            return convertToJdbcTestMember(foundMember);
+            return convertToMember(foundMember);
         }
 
         return null;
@@ -64,12 +70,12 @@ public class JdbcTestMemberRepositoryImpl implements JdbcTestMemberRepository {
         memberRepository.deleteById(id);
     }
 
-    private JdbcTestMember convertToJdbcTestMember(Member member) {
-        return JdbcTestMember.builder()
-                             .id(member.getId())
-                             .phoneNumber(member.getPhoneNumber())
-                             .name(member.getName())
-                             .nickName(member.getNickName())
-                             .build();
+    private Member convertToMember(JdbcTestMember jdbcTestMember) {
+        return Member.builder()
+                     .id(jdbcTestMember.getId())
+                     .phoneNumber(jdbcTestMember.getPhoneNumber())
+                     .name(jdbcTestMember.getName())
+                     .nickName(jdbcTestMember.getNickName())
+                     .build();
     }
 }
