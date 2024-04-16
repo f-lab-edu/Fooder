@@ -1,5 +1,6 @@
 package com.ryumina.fooder.store.controller;
 
+import com.ryumina.fooder.store.controller.dto.response.SearchStoresResponseDto;
 import com.ryumina.fooder.store.domain.Store;
 import com.ryumina.fooder.store.infra.Paging;
 import com.ryumina.fooder.store.infra.Response;
@@ -13,23 +14,27 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/stores")
+@RequestMapping("/store")
 public class StoreController {
     private final StoreService storeService;
 
     @GetMapping
-    public Response<Paging<List<Store>>> searchStores(@RequestParam int page, @RequestParam int size) {
+    public Response<Paging<List<SearchStoresResponseDto>>> searchStores(@RequestParam int page, @RequestParam int size) {
         Page<Store> storeList = storeService.searchStores(page, size);
 
-        return Response.<Paging<List<Store>>>builder(Result.SUCCESS.getCode(),
-                                                     Result.SUCCESS.getMessage())
+        return Response.<Paging<List<SearchStoresResponseDto>>>builder(Result.SUCCESS.getCode(),
+                                                                       Result.SUCCESS.getMessage())
                        .data(Paging.builder(storeList.getTotalElements(),
                                             page,
                                             size,
-                                            storeList.getContent())
+                                            storeList.getContent()
+                                                     .stream()
+                                                     .map(SearchStoresResponseDto::from)
+                                                     .collect(Collectors.toList()))
                                    .build())
 
                        .build();
