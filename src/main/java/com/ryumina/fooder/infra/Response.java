@@ -1,4 +1,4 @@
-package com.ryumina.fooder.store.infra;
+package com.ryumina.fooder.infra;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

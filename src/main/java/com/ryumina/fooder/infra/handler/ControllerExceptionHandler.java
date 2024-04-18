@@ -1,7 +1,7 @@
-package com.ryumina.fooder.store.handler;
+package com.ryumina.fooder.infra.handler;
 
-import com.ryumina.fooder.store.exception.FooderBusinessException;
-import com.ryumina.fooder.store.infra.Response;
+import com.ryumina.fooder.infra.Response;
+import com.ryumina.fooder.infra.exception.FooderBusinessException;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;

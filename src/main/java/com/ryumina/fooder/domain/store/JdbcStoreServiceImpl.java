@@ -1,8 +1,5 @@
-package com.ryumina.fooder.store.service.impl;
+package com.ryumina.fooder.domain.store;
 
-import com.ryumina.fooder.store.domain.JdbcStoreRepository;
-import com.ryumina.fooder.store.domain.Store;
-import com.ryumina.fooder.store.infra.StoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;

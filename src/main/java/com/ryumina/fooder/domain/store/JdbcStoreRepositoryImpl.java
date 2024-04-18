@@ -1,10 +1,7 @@
-package com.ryumina.fooder.store.domain.impl;
+package com.ryumina.fooder.domain.store;
 
-import com.ryumina.fooder.store.domain.JdbcStoreRepository;
-import com.ryumina.fooder.store.domain.Store;
-import com.ryumina.fooder.store.exception.FooderBusinessException;
-import com.ryumina.fooder.store.infra.Result;
-import com.ryumina.fooder.store.infra.StoreRepository;
+import com.ryumina.fooder.infra.Result;
+import com.ryumina.fooder.infra.exception.FooderBusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

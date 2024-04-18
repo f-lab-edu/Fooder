@@ -1,4 +1,4 @@
-package com.ryumina.fooder.store.domain;
+package com.ryumina.fooder.domain.store;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
