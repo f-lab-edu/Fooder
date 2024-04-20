@@ -4,46 +4,57 @@ import com.ryumina.fooder.domain.store.Store;
 import lombok.Builder;
 import lombok.Getter;
 
-@Builder
+import java.time.LocalTime;
+
 @Getter
 public class SearchStoresResponseDto {
-    private Long id;
-    private String name;
-    private String foodCategory;
-    private String telephoneNumber;
-    private String zipCode;
-    private String address;
-    private String detailAddress;
-    private String bizNumber;
-    private Integer minOrderPrice;
-    private Integer deliveryPrice;
-    private String orderPossibleType;
-    private String payPossibleType;
-    private String status;
-    private String startTime;
-    private String finishTime;
-    //    private String deliveryLocation;
-    private String ownerNotification;
+    private final Long id;
+    private final String name;
+    private final boolean open;
+    private final String foodCategory;
+    private final String telephoneNumber;
+    private final String zipCode;
+    private final String address;
+    private final String detailAddress;
+    private final int minOrderPrice;
+    private final int deliveryPrice;
+    private final LocalTime startTime;
+    private final LocalTime finishTime;
+
+    @Builder
+    public SearchStoresResponseDto(Long id, String name, boolean open, String foodCategory, String telephoneNumber,
+                                   String zipCode, String address, String detailAddress, int minOrderPrice, int deliveryPrice,
+                                   LocalTime startTime, LocalTime finishTime) {
+        this.id = id;
+        this.name = name;
+        this.open = open;
+        this.foodCategory = foodCategory;
+        this.telephoneNumber = telephoneNumber;
+        this.zipCode = zipCode;
+        this.address = address;
+        this.detailAddress = detailAddress;
+        this.minOrderPrice = minOrderPrice;
+        this.deliveryPrice = deliveryPrice;
+        this.startTime = startTime;
+        this.finishTime = finishTime;
+    }
 
     public static SearchStoresResponseDto from(Store store) {
         return SearchStoresResponseDto.builder()
                                       .id(store.getId())
                                       .name(store.getName())
-                                      .foodCategory(store.getFoodCategory())
+                                      .open(store.isOpen())
+                                      .foodCategory(store.getFoodCategory().toString())
                                       .telephoneNumber(store.getTelephoneNumber())
-                                      .zipCode(store.getZipCode())
-                                      .address(store.getAddress())
-                                      .detailAddress(store.getDetailAddress())
-                                      .bizNumber(store.getBizNumber())
+                                      .zipCode(store.getAddress().getZipCode())
+                                      .address(store.getAddress().getAddress())
+                                      .detailAddress(store.getAddress().getDetailAddress())
                                       .minOrderPrice(store.getMinOrderPrice())
                                       .deliveryPrice(store.getDeliveryPrice())
-                                      .orderPossibleType(store.getOrderPossibleType())
-                                      .payPossibleType(store.getPayPossibleType())
-                                      .status(store.getStatus())
-                                      .startTime(store.getStartTime())
-                                      .finishTime(store.getFinishTime())
-                                      .ownerNotification(store.getOwnerNotification())
+                                      .startTime(store.getTime().getStartTime())
+                                      .finishTime(store.getTime().getFinishTime())
                                       .build();
     }
+
 }
 

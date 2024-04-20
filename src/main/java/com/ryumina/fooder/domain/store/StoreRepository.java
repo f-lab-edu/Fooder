@@ -1,6 +1,9 @@
 package com.ryumina.fooder.domain.store;
 
-import org.springframework.data.repository.PagingAndSortingRepository;
+import com.ryumina.fooder.domain.store.dto.request.StoreSearchRequestDto;
 
-public interface StoreRepository extends PagingAndSortingRepository<Store, Long> {
+import java.util.List;
+
+public interface StoreRepository {
+    List<Store> searchStores(StoreSearchRequestDto storeSearchRequestDto);
 }

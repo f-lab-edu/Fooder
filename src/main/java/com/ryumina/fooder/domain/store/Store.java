@@ -1,72 +1,54 @@
 package com.ryumina.fooder.domain.store;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PositiveOrZero;
-import jakarta.validation.constraints.Size;
-import lombok.Builder;
+import com.ryumina.fooder.domain.time.Time;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.MappedCollection;
+import org.springframework.data.relational.core.mapping.Table;
 
-@Builder
+@Table(name = "STORE")
 @Getter
 public class Store {
+    public enum FoodCategory {CHICKEN, PIZZA, BURGER, MEAT, SALAD, SUSHI, SANDWICH}
 
     @Id
+    @Column("STORE_ID")
     private Long id;
 
-    @NotNull
+    @Column("NAME")
     private String name;
 
-    @NotNull
-    private String foodCategory;
+    @Column("OPEN")
+    private boolean open;
 
-    @Size(min = 10, max = 11, message = "올바른 전화번호 양식이 아닙니다.")
+    @Column("FOOD_CATEGORY")
+    private FoodCategory foodCategory;
+
+    @Column("TELEPHONE_NUMBER")
     private String telephoneNumber;
 
-    @NotNull
-    @Size(max = 5)
-    private String zipCode;
+    @MappedCollection(idColumn = "STORE_ID")
+    private Address address;
 
-    @NotNull
-    @Size(max = 255)
-    private String address;
+    @Column("MIN_ORDER_PRICE")
+    private int minOrderPrice;
 
-    @NotNull
-    @Size(max = 255)
-    private String detailAddress;
+    @Column("DELIVERY_PRICE")
+    private int deliveryPrice;
 
-    @NotNull
-    @Size(max = 10)
-    private String bizNumber;
+    @MappedCollection(idColumn = "STORE_ID")
+    private Time time;
 
-    @NotNull
-    @PositiveOrZero
-    private Integer minOrderPrice;
+    public Store() {
+    }
 
-    @NotNull
-    @PositiveOrZero
-    private Integer deliveryPrice;
+    public void open() {
+        this.open = true;
+    }
 
-    @NotNull
-    private String orderPossibleType;
-
-    @NotNull
-    private String payPossibleType;
-
-    @NotNull
-    private String status;
-
-    @NotNull
-    @Size(min = 4, max = 4)
-    private String startTime;
-
-    @NotNull
-    @Size(min = 4, max = 4)
-    private String finishTime;
-
-//    @NotNull
-//    private String deliveryLocation;
-
-    private String ownerNotification;
+    public void close() {
+        this.open = false;
+    }
 
 }
