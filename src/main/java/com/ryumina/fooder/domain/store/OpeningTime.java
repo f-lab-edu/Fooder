@@ -1,4 +1,4 @@
-package com.ryumina.fooder.domain.time;
+package com.ryumina.fooder.domain.store;
 
 import lombok.Getter;
 

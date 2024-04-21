@@ -1,6 +1,5 @@
 package com.ryumina.fooder.domain.store;
 
-import com.ryumina.fooder.domain.time.OpeningTime;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
@@ -17,9 +16,6 @@ public class Store {
 
     @Column("NAME")
     private String name;
-
-    @Column("OPEN")
-    private boolean open;
 
     @Column("FOOD_CATEGORY")
     private FoodCategory foodCategory;
@@ -39,36 +35,8 @@ public class Store {
     @Embedded.Empty
     private OpeningTime openingTime;
 
-    public Store() {
-    }
-
-    public Store(Store store) {
-        this.id = store.getId();
-        this.name = store.name;
-        this.foodCategory = store.foodCategory;
-        this.telephoneNumber = store.telephoneNumber;
-        this.address = store.address;
-        this.minOrderPrice = store.minOrderPrice;
-        this.deliveryPrice = store.deliveryPrice;
-        this.openingTime = store.openingTime;
-
-        this.setOpenStatus();
-    }
-
-    private void open() {
-        this.open = true;
-    }
-
-    private void close() {
-        this.open = false;
-    }
-
-    private void setOpenStatus() {
-        boolean isOpening = OpeningTime.isOpeningTime(this.openingTime.getStartTime(), this.openingTime.getFinishTime());
-
-        if (isOpening) {
-            open();
-        }
+    public boolean isOpen() {
+        return OpeningTime.isOpeningTime(this.openingTime.getStartTime(), this.openingTime.getFinishTime());
     }
 
 }

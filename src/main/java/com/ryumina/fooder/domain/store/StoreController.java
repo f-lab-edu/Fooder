@@ -23,7 +23,7 @@ public class StoreController {
         List<Store> stores = storeService.searchStores(requestDto);
 
         return stores.stream()
-                     .map(store -> SearchStoresResponseDto.from(new Store(store)))
+                     .map(SearchStoresResponseDto::from)
                      .collect(Collectors.toList());
     }
 
