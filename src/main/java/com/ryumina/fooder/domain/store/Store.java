@@ -1,16 +1,15 @@
 package com.ryumina.fooder.domain.store;
 
-import com.ryumina.fooder.domain.time.Time;
+import com.ryumina.fooder.domain.time.OpeningTime;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.MappedCollection;
+import org.springframework.data.relational.core.mapping.Embedded;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Table(name = "STORE")
 @Getter
 public class Store {
-    public enum FoodCategory {CHICKEN, PIZZA, BURGER, MEAT, SALAD, SUSHI, SANDWICH}
 
     @Id
     @Column("STORE_ID")
@@ -28,7 +27,7 @@ public class Store {
     @Column("TELEPHONE_NUMBER")
     private String telephoneNumber;
 
-    @MappedCollection(idColumn = "STORE_ID")
+    @Embedded.Empty
     private Address address;
 
     @Column("MIN_ORDER_PRICE")
@@ -37,18 +36,39 @@ public class Store {
     @Column("DELIVERY_PRICE")
     private int deliveryPrice;
 
-    @MappedCollection(idColumn = "STORE_ID")
-    private Time time;
+    @Embedded.Empty
+    private OpeningTime openingTime;
 
     public Store() {
     }
 
-    public void open() {
+    public Store(Store store) {
+        this.id = store.getId();
+        this.name = store.name;
+        this.foodCategory = store.foodCategory;
+        this.telephoneNumber = store.telephoneNumber;
+        this.address = store.address;
+        this.minOrderPrice = store.minOrderPrice;
+        this.deliveryPrice = store.deliveryPrice;
+        this.openingTime = store.openingTime;
+
+        this.setOpenStatus();
+    }
+
+    private void open() {
         this.open = true;
     }
 
-    public void close() {
+    private void close() {
         this.open = false;
+    }
+
+    private void setOpenStatus() {
+        boolean isOpening = OpeningTime.isOpeningTime(this.openingTime.getStartTime(), this.openingTime.getFinishTime());
+
+        if (isOpening) {
+            open();
+        }
     }
 
 }

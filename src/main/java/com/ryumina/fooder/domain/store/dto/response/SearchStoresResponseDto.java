@@ -51,8 +51,8 @@ public class SearchStoresResponseDto {
                                       .detailAddress(store.getAddress().getDetailAddress())
                                       .minOrderPrice(store.getMinOrderPrice())
                                       .deliveryPrice(store.getDeliveryPrice())
-                                      .startTime(store.getTime().getStartTime())
-                                      .finishTime(store.getTime().getFinishTime())
+                                      .startTime(store.getOpeningTime().getStartTime())
+                                      .finishTime(store.getOpeningTime().getFinishTime())
                                       .build();
     }
 
