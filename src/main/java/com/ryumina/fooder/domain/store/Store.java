@@ -36,7 +36,7 @@ public class Store {
     private OpeningTime openingTime;
 
     public boolean isOpen() {
-        return OpeningTime.isOpeningTime(this.openingTime.getStartTime(), this.openingTime.getFinishTime());
+        return this.openingTime.isOpeningTime(this.openingTime.getStartTime(), this.openingTime.getFinishTime());
     }
 
 }
