@@ -1,4 +1,4 @@
-package com.ryumina.fooder.infra;
+package com.ryumina.fooder.common;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.ryumina.fooder.infra.exception;
+package com.ryumina.fooder.exception;
 
 import lombok.Getter;
 

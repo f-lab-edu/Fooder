@@ -1,8 +1,8 @@
-package com.ryumina.fooder.infra.handler;
+package com.ryumina.fooder.exception.handler;
 
-import com.ryumina.fooder.infra.FailResult;
-import com.ryumina.fooder.infra.Response;
-import com.ryumina.fooder.infra.exception.FooderBusinessException;
+import com.ryumina.fooder.common.FailResult;
+import com.ryumina.fooder.common.Response;
+import com.ryumina.fooder.exception.FooderBusinessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;

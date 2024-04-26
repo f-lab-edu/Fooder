@@ -1,4 +1,4 @@
-package com.ryumina.fooder.infra.dto;
+package com.ryumina.fooder.domain.store.controller.dto.request;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.PositiveOrZero;

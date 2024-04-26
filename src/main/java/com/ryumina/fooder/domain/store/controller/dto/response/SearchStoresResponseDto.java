@@ -1,6 +1,6 @@
-package com.ryumina.fooder.domain.store.dto.response;
+package com.ryumina.fooder.domain.store.controller.dto.response;
 
-import com.ryumina.fooder.domain.store.Store;
+import com.ryumina.fooder.domain.store.model.Store;
 import lombok.Builder;
 import lombok.Getter;
 

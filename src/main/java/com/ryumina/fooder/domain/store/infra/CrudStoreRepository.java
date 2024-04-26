@@ -1,6 +1,6 @@
 package com.ryumina.fooder.domain.store.infra;
 
-import com.ryumina.fooder.domain.store.Store;
+import com.ryumina.fooder.domain.store.model.Store;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;

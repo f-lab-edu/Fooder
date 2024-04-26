@@ -1,6 +1,5 @@
-package com.ryumina.fooder.domain.store.dto.request;
+package com.ryumina.fooder.domain.store.controller.dto.request;
 
-import com.ryumina.fooder.infra.dto.PageRequestDto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

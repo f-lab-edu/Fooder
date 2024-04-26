@@ -1,4 +1,4 @@
-package com.ryumina.fooder.domain.store;
+package com.ryumina.fooder.domain.store.model;
 
 import lombok.Getter;
 import org.springframework.data.annotation.Id;

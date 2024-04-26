@@ -1,7 +1,9 @@
-package com.ryumina.fooder.domain.store;
+package com.ryumina.fooder.domain.store.controller;
 
-import com.ryumina.fooder.domain.store.dto.request.StoreSearchRequestDto;
-import com.ryumina.fooder.domain.store.dto.response.SearchStoresResponseDto;
+import com.ryumina.fooder.domain.store.controller.dto.request.StoreSearchRequestDto;
+import com.ryumina.fooder.domain.store.controller.dto.response.SearchStoresResponseDto;
+import com.ryumina.fooder.domain.store.model.Store;
+import com.ryumina.fooder.domain.store.service.StoreService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
