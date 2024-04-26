@@ -1,9 +1,9 @@
-package com.ryumina.fooder.repository;
+package com.ryumina.fooder.jdbc.repository;
 
-import com.ryumina.fooder.domain.JdbcTestMember;
-import com.ryumina.fooder.exception.FooderBusinessException;
-import com.ryumina.fooder.infra.Member;
-import com.ryumina.fooder.infra.MemberRepository;
+import com.ryumina.fooder.jdbc.domain.JdbcTestMember;
+import com.ryumina.fooder.jdbc.exception.FooderBusinessException;
+import com.ryumina.fooder.jdbc.domain.Member;
+import com.ryumina.fooder.jdbc.infra.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor
-public class JdbcTestMemberRepositoryImpl implements JdbcTestMemberRepository {
+public class JdbcTestMemberRepositoryImpl implements TestMemberRepository {
     private final MemberRepository memberRepository;
 
     @Transactional

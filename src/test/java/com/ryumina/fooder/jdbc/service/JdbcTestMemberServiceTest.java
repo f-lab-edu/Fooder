@@ -1,11 +1,9 @@
-package com.ryumina.fooder.service;
+package com.ryumina.fooder.jdbc.service;
 
-import com.ryumina.fooder.exception.FooderBusinessException;
-import com.ryumina.fooder.infra.Member;
-import com.ryumina.fooder.infra.MemberRepository;
-import com.ryumina.fooder.infra.MemberService;
-import com.ryumina.fooder.repository.JdbcTestMemberRepository;
-import com.ryumina.fooder.repository.JdbcTestMemberRepositoryImpl;
+import com.ryumina.fooder.jdbc.domain.Member;
+import com.ryumina.fooder.jdbc.exception.FooderBusinessException;
+import com.ryumina.fooder.jdbc.infra.MemberRepository;
+import com.ryumina.fooder.jdbc.repository.TestMemberRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,14 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class JdbcTestMemberServiceImplTest {
+class JdbcTestMemberServiceTest {
 
     @Autowired
     MemberRepository memberRepository;
     @Autowired
-    JdbcTestMemberRepository jdbcTestMemberRepository = new JdbcTestMemberRepositoryImpl(memberRepository);
+    TestMemberRepository jdbcTestMemberRepository;
     @Autowired
-    MemberService memberService = new JdbcTestMemberServiceImpl(jdbcTestMemberRepository);
+    MemberService memberService;
 
     @AfterEach
     void deleteAllData() {

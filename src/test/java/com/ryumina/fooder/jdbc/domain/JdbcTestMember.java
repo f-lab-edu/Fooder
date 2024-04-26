@@ -1,4 +1,4 @@
-package com.ryumina.fooder.domain;
+package com.ryumina.fooder.jdbc.domain;
 
 import lombok.Builder;
 import lombok.Getter;

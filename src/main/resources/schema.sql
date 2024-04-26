@@ -13,3 +13,15 @@ CREATE TABLE `STORE`
     `START_TIME`       TIME                                                NOT NULL,
     `FINISH_TIME`      TIME                                                NOT NULL
 );
+
+
+
+-- spring data jdbc test ddl
+DROP TABLE MEMBER IF EXISTS CASCADE;
+CREATE TABLE MEMBER
+(
+    ID           BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY NOT NULL,
+    PHONE_NUMBER VARCHAR(20)                                     NOT NULL,
+    NAME         VARCHAR(20)                                     NOT NULL,
+    NICK_NAME    VARCHAR(20)                                     NOT NULL
+)

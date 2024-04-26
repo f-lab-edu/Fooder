@@ -1,4 +1,4 @@
-package com.ryumina.fooder.exception;
+package com.ryumina.fooder.jdbc.exception;
 
 public class FooderBusinessException extends RuntimeException {
 
