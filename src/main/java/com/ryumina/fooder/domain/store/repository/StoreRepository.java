@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface StoreRepository {
     List<Store> searchStores(StoreSearchRequestDto storeSearchRequestDto);
+
+    Store findById(Long storeId);
 }
