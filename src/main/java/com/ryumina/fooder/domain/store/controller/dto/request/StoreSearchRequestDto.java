@@ -1,12 +1,17 @@
 package com.ryumina.fooder.domain.store.controller.dto.request;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
-@RequiredArgsConstructor
 public class StoreSearchRequestDto extends PageRequestDto {
-    private String name;
     private String foodCategory;
 
+    public StoreSearchRequestDto(String foodCategory) {
+        this.foodCategory = foodCategory;
+    }
+
+    public StoreSearchRequestDto(String foodCategory, int page, int size) {
+        super(page, size);
+        this.foodCategory = foodCategory;
+    }
 }
