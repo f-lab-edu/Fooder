@@ -1,5 +1,8 @@
-package com.ryumina.fooder.domain.store.model;
+package com.ryumina.fooder.domain.store.model.entity;
 
+import com.ryumina.fooder.domain.store.model.Address;
+import com.ryumina.fooder.domain.store.model.FoodCategory;
+import com.ryumina.fooder.domain.store.model.OpeningTime;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;

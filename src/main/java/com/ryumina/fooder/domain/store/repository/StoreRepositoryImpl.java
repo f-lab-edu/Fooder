@@ -2,7 +2,7 @@ package com.ryumina.fooder.domain.store.repository;
 
 import com.ryumina.fooder.domain.store.controller.dto.request.StoreSearchRequestDto;
 import com.ryumina.fooder.domain.store.infra.CrudStoreRepository;
-import com.ryumina.fooder.domain.store.model.Store;
+import com.ryumina.fooder.domain.store.model.entity.Store;
 import com.ryumina.fooder.exception.FooderBusinessException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

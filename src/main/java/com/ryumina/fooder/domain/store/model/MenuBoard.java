@@ -1,5 +1,8 @@
 package com.ryumina.fooder.domain.store.model;
 
+import com.ryumina.fooder.domain.store.model.entity.Menu;
+import com.ryumina.fooder.domain.store.model.entity.OptionGroupSpec;
+import com.ryumina.fooder.domain.store.model.entity.Store;
 import lombok.Getter;
 
 import java.util.List;

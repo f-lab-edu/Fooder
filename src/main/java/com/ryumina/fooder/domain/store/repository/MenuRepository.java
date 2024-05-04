@@ -1,6 +1,6 @@
 package com.ryumina.fooder.domain.store.repository;
 
-import com.ryumina.fooder.domain.store.model.Menu;
+import com.ryumina.fooder.domain.store.model.entity.Menu;
 
 import java.util.List;
 

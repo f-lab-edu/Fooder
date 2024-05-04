@@ -2,9 +2,9 @@ package com.ryumina.fooder.domain.store.service;
 
 import com.ryumina.fooder.domain.store.controller.dto.request.StoreSearchRequestDto;
 import com.ryumina.fooder.domain.store.model.MenuBoard;
-import com.ryumina.fooder.domain.store.model.OptionGroupSpec;
-import com.ryumina.fooder.domain.store.model.OptionSpec;
-import com.ryumina.fooder.domain.store.model.Store;
+import com.ryumina.fooder.domain.store.model.entity.OptionGroupSpec;
+import com.ryumina.fooder.domain.store.model.entity.OptionSpec;
+import com.ryumina.fooder.domain.store.model.entity.Store;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

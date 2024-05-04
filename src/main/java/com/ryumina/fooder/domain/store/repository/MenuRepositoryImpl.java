@@ -1,7 +1,7 @@
 package com.ryumina.fooder.domain.store.repository;
 
 import com.ryumina.fooder.domain.store.infra.CrudMenuRepository;
-import com.ryumina.fooder.domain.store.model.Menu;
+import com.ryumina.fooder.domain.store.model.entity.Menu;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
