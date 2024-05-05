@@ -3,7 +3,7 @@ spring:
     name: fooder
   datasource:
     driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:fooder
+    url: jdbc:h2:mem:fooder;mode=mysql
     username: sa
     password:
   h2:
