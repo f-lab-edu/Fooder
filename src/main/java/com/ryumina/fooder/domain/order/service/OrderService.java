@@ -11,11 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
+    private final OrderValidator orderValidator;
 
     @Transactional
     public Order saveOrder(Cart cart) {
         Order order = Order.from(cart);
 
+        orderValidator.validate(order);
         order.init();
 
         return orderRepository.saveOrder(order);
