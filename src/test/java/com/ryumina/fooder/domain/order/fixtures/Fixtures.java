@@ -19,7 +19,7 @@ public class Fixtures {
                     .id(1L)
                     .userId(1L)
                     .storeId(1L)
-                    .orderedTime(LocalDateTime.of(2024, 5, 1, 11, 23))
+                    .orderDateTime(LocalDateTime.of(2024, 5, 1, 11, 23))
                     .orderItemList(Arrays.asList(anOrderItem().build()));
     }
 

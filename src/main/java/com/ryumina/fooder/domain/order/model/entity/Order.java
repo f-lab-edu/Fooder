@@ -1,7 +1,7 @@
 package com.ryumina.fooder.domain.order.model.entity;
 
 import com.ryumina.fooder.domain.order.model.OrderStatus;
-import com.ryumina.fooder.domain.order.service.Cart;
+import com.ryumina.fooder.domain.order.validator.OrderValidator;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
@@ -12,7 +12,6 @@ import org.springframework.data.relational.core.mapping.Table;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Table("ORDER")
 @Getter
@@ -32,7 +31,7 @@ public class Order {
     private List<OrderItem> orderItemList = new ArrayList<>();
 
     @Column("ORDERED_TIME")
-    private LocalDateTime orderedTime;
+    private LocalDateTime orderDateTime;
 
     @Column("ORDER_STATUS")
     private OrderStatus orderStatus;
@@ -46,27 +45,18 @@ public class Order {
 
     @Builder
     public Order(Long id, Long userId, Long storeId, List<OrderItem> orderItemList,
-                 LocalDateTime orderedTime, OrderStatus orderStatus) {
+                 LocalDateTime orderDateTime, OrderStatus orderStatus) {
         this.id = id;
         this.userId = userId;
         this.storeId = storeId;
-        this.orderedTime = orderedTime;
+        this.orderDateTime = orderDateTime;
         this.orderStatus = orderStatus;
         this.orderItemList.addAll(orderItemList);
     }
 
-    public void init() {
+    public void create(OrderValidator orderValidator) {
+        orderValidator.validate(this);
         ordered();
-    }
-
-    public static Order from(Cart cart) {
-        return new Order(cart.getUserId(),
-                         cart.getStoreId(),
-                         cart.getCartItemList()
-                             .stream()
-                             .map(OrderItem::from)
-                             .collect(Collectors.toList())
-        );
     }
 
     // 주문완료
