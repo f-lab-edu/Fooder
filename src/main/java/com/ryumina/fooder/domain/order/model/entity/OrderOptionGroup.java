@@ -7,8 +7,9 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Table("ORDER_OPTION_GROUP")
 @Getter
@@ -22,7 +23,7 @@ public class OrderOptionGroup {
     private String name;
 
     @MappedCollection(idColumn = "ORDER_OPTION_GROUP_ID", keyColumn = "ORDER_OPTION_ID")
-    private List<OrderOption> orderOptionList = new ArrayList<>();
+    private Set<OrderOption> orderOptionList = new HashSet<>();
 
     public OrderOptionGroup() {
     }

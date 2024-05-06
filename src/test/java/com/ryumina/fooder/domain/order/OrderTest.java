@@ -42,9 +42,6 @@ public class OrderTest {
         Optional<Order> createdOrder = crudOrderRepository.findById(order.getId());
 
         // then
-        // TODO: 테스트 실패 - order 객체와 created 객체가 다름
-        // TODO: ORDER_OPTION_GROUP 테이블에 데이터 INSERT시 ORDER_OPTION_GROUP_ID 가 중복되어서 저장됨 => ?
-        // TODO: ORDER_OPTION_GROUP_ID만 PK로 해보고 여러 시도를 해봐도 계속 ORDER_OPTION_GROUP_ID 값이 중복되어서 저장된다.
         Assertions.assertThat(createdOrder.isPresent()).isTrue();
         Assertions.assertThat(createdOrder.get().getId()).isEqualTo(order.getId());
         Assertions.assertThat(createdOrder.get().getTotalPrice()).isEqualTo(59700);

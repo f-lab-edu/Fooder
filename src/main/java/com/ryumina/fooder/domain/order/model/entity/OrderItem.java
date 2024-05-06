@@ -7,8 +7,9 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Table("ORDER_ITEM")
 @Getter
@@ -31,8 +32,7 @@ public class OrderItem {
     private int count;
 
     @MappedCollection(idColumn = "ORDER_ITEM_ID", keyColumn = "ORDER_OPTION_GROUP_ID")
-    private List<OrderOptionGroup> orderOptionGroupList = new ArrayList<>();
-
+    private Set<OrderOptionGroup> orderOptionGroupList = new HashSet<>();
 
     public OrderItem() {
     }
