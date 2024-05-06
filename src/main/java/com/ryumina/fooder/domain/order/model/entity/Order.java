@@ -10,8 +10,9 @@ import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Table("ORDER")
 @Getter
@@ -28,7 +29,7 @@ public class Order {
     private Long storeId;
 
     @MappedCollection(idColumn = "ORDER_ID", keyColumn = "ORDER_ITEM_ID")
-    private List<OrderItem> orderItemList = new ArrayList<>();
+    private Set<OrderItem> orderItemList = new HashSet<>();
 
     @Column("ORDERED_TIME")
     private LocalDateTime orderDateTime;
