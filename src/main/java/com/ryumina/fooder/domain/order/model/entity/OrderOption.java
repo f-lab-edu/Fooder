@@ -1,6 +1,5 @@
 package com.ryumina.fooder.domain.order.model.entity;
 
-import com.ryumina.fooder.domain.order.service.Cart;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
@@ -11,6 +10,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Getter
 public class OrderOption {
 
+    @Id
     @Column("ORDER_OPTION_ID")
     private Long id;
 
@@ -34,8 +34,4 @@ public class OrderOption {
         this.price = price;
     }
 
-    public static OrderOption from(Cart.CartOption cartOption) {
-        return new OrderOption(cartOption.getName(),
-                               cartOption.getPrice());
-    }
 }

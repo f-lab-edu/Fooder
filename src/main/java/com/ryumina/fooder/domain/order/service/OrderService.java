@@ -12,13 +12,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class OrderService {
     private final OrderRepository orderRepository;
     private final OrderValidator orderValidator;
+    private final OrderConvertor orderConvertor;
 
     @Transactional
     public Order saveOrder(Cart cart) {
-        Order order = Order.from(cart);
+        Order order = orderConvertor.toOrder(cart);
 
-        orderValidator.validate(order);
-        order.init();
+        order.create(orderValidator);
 
         return orderRepository.saveOrder(order);
     }

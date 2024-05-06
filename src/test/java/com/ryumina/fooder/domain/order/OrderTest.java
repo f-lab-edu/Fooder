@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.Optional;
+
 @SpringBootTest
 public class OrderTest {
 
@@ -37,9 +39,15 @@ public class OrderTest {
 
         // when
         Order order = orderService.saveOrder(cart);
+        Optional<Order> createdOrder = crudOrderRepository.findById(order.getId());
 
         // then
-        Assertions.assertThat(order.getTotalPrice()).isEqualTo(59700);
+        // TODO: 테스트 실패 - order 객체와 created 객체가 다름
+        // TODO: ORDER_OPTION_GROUP 테이블에 데이터 INSERT시 ORDER_OPTION_GROUP_ID 가 중복되어서 저장됨 => ?
+        // TODO: ORDER_OPTION_GROUP_ID만 PK로 해보고 여러 시도를 해봐도 계속 ORDER_OPTION_GROUP_ID 값이 중복되어서 저장된다.
+        Assertions.assertThat(createdOrder.isPresent()).isTrue();
+        Assertions.assertThat(createdOrder.get().getId()).isEqualTo(order.getId());
+        Assertions.assertThat(createdOrder.get().getTotalPrice()).isEqualTo(59700);
     }
 
     public Cart dataSet() {

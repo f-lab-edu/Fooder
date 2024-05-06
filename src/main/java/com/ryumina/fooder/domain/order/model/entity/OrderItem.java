@@ -1,6 +1,5 @@
 package com.ryumina.fooder.domain.order.model.entity;
 
-import com.ryumina.fooder.domain.order.service.Cart;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
@@ -10,7 +9,6 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Table("ORDER_ITEM")
 @Getter
@@ -57,15 +55,4 @@ public class OrderItem {
         return (this.price + orderOptionGroupList.stream().mapToInt(OrderOptionGroup::getOptionPrice).sum()) * this.count;
     }
 
-    public static OrderItem from(Cart.CartItem cartItem) {
-        return new OrderItem(cartItem.getMenuId(),
-                             cartItem.getMenuName(),
-                             cartItem.getPrice(),
-                             cartItem.getCount(),
-                             cartItem.getCartOptionGroupList()
-                                     .stream()
-                                     .map(OrderOptionGroup::from)
-                                     .collect(Collectors.toList())
-        );
-    }
 }
