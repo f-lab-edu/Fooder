@@ -1,7 +1,9 @@
 package com.ryumina.fooder.domain.store.model.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -19,4 +21,16 @@ public class OptionSpec {
     @Column("PRICE")
     private int price;
 
+    @Builder
+    public OptionSpec(String name, int price) {
+        this(null, name, price);
+    }
+
+    @Builder
+    @PersistenceCreator
+    public OptionSpec(Long id, String name, int price) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+    }
 }
