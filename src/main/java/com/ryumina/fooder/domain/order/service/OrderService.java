@@ -18,7 +18,7 @@ public class OrderService {
     public Order saveOrder(Cart cart) {
         Order order = orderConvertor.toOrder(cart);
 
-        order.create(orderValidator);
+        order.order(orderValidator);
 
         return orderRepository.saveOrder(order);
     }

@@ -1,5 +1,6 @@
 package com.ryumina.fooder.domain.order.fixtures;
 
+import com.ryumina.fooder.domain.order.model.OrderHistory;
 import com.ryumina.fooder.domain.order.model.entity.Order;
 import com.ryumina.fooder.domain.order.model.entity.Order.OrderBuilder;
 import com.ryumina.fooder.domain.order.model.entity.OrderItem;
@@ -19,7 +20,7 @@ public class Fixtures {
                     .id(1L)
                     .userId(1L)
                     .storeId(1L)
-                    .orderDateTime(LocalDateTime.of(2024, 5, 1, 11, 23))
+                    .orderHistory(new OrderHistory())
                     .orderItemList(Arrays.asList(anOrderItem().build()));
     }
 
