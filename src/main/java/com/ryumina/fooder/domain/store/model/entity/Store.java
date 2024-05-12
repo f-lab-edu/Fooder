@@ -6,6 +6,7 @@ import com.ryumina.fooder.domain.store.model.OpeningTime;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Embedded;
 import org.springframework.data.relational.core.mapping.Table;
@@ -42,12 +43,14 @@ public class Store {
     public Store() {
     }
 
+    @Builder
     public Store(String name, FoodCategory foodCategory, String telephoneNumber, Address address,
                  int minOrderPrice, int deliveryPrice, OpeningTime openingTime) {
         this(null, name, foodCategory, telephoneNumber, address, minOrderPrice, deliveryPrice, openingTime);
     }
 
     @Builder
+    @PersistenceCreator
     public Store(Long id, String name, FoodCategory foodCategory, String telephoneNumber, Address address,
                  int minOrderPrice, int deliveryPrice, OpeningTime openingTime) {
         this.id = id;

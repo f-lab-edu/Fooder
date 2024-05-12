@@ -4,6 +4,8 @@ import com.ryumina.fooder.domain.order.model.entity.Order;
 import com.ryumina.fooder.domain.store.model.entity.Store;
 import com.ryumina.fooder.domain.store.repository.StoreRepository;
 import com.ryumina.fooder.exception.FooderBusinessException;
+import com.ryumina.fooder.order.AnOrder;
+import com.ryumina.fooder.store.AStore;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,10 +15,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collections;
-
-import static com.ryumina.fooder.domain.order.fixtures.Fixtures.anOrder;
-import static com.ryumina.fooder.domain.store.fixtures.Fixtures.aNotOpenStore;
-import static com.ryumina.fooder.domain.store.fixtures.Fixtures.aOpenStore;
 
 @ExtendWith(MockitoExtension.class)
 class OrderValidatorTest {
@@ -31,8 +29,8 @@ class OrderValidatorTest {
     @Test
     void isNotOpenStore() {
         // given
-        Store store = aNotOpenStore().build();
-        Order order = anOrder().build();
+        Store store = getANotOpenStore();
+        Order order = getAnOrder();
 
         Assertions.assertThatThrownBy(() -> orderValidator.validate(order, store))
                   .isInstanceOf(FooderBusinessException.class)
@@ -44,8 +42,8 @@ class OrderValidatorTest {
     @Test
     void isEmptyOrderItemList() {
         // given
-        Store store = aOpenStore().build();
-        Order order = anOrder().orderItemList(Collections.emptyList()).build();
+        Store store = getAOpenStore();
+        Order order = AnOrder.order().orderItemList(Collections.emptyList()).build();
 
         Assertions.assertThatThrownBy(() -> orderValidator.validate(order, store))
                   .isInstanceOf(FooderBusinessException.class)
@@ -57,13 +55,25 @@ class OrderValidatorTest {
     @Test
     void isNotValidMinOrderPrice() {
         // given
-        Store store = aOpenStore().minOrderPrice(50000).build();
-        Order order = anOrder().build();
+        Store store = AStore.aOpenStore().minOrderPrice(50000).build();
+        Order order = getAnOrder();
 
         Assertions.assertThatThrownBy(() -> orderValidator.validate(order, store))
                   .isInstanceOf(FooderBusinessException.class)
                   .hasMessageContaining("최소 주문 금액을 만족하지 않습니다.");
 
+    }
+
+    Order getAnOrder() {
+        return AnOrder.order().build();
+    }
+
+    Store getANotOpenStore() {
+        return AStore.aNotOpenStore().build();
+    }
+
+    Store getAOpenStore() {
+        return AStore.aOpenStore().build();
     }
 
 }

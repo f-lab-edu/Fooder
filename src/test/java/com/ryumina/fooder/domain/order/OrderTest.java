@@ -4,9 +4,13 @@ import com.ryumina.fooder.domain.order.infra.CrudOrderRepository;
 import com.ryumina.fooder.domain.order.model.entity.Order;
 import com.ryumina.fooder.domain.order.service.Cart;
 import com.ryumina.fooder.domain.order.service.OrderService;
+import com.ryumina.fooder.domain.store.infra.CrudMenuRepository;
+import com.ryumina.fooder.domain.store.infra.CrudStoreRepository;
+import com.ryumina.fooder.order.ACart;
+import com.ryumina.fooder.store.AMenu;
+import com.ryumina.fooder.store.AStore;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,14 +26,17 @@ public class OrderTest {
     @Autowired
     private CrudOrderRepository crudOrderRepository;
 
-    @BeforeEach
-    void dataInit() {
-        this.dataSet();
-    }
+    @Autowired
+    private CrudStoreRepository crudStoreRepository;
+
+    @Autowired
+    private CrudMenuRepository crudMenuRepository;
 
     @AfterEach
     void deleteAll() {
         crudOrderRepository.deleteAll();
+        crudStoreRepository.deleteAll();
+        crudMenuRepository.deleteAll();
     }
 
     @Test
@@ -44,30 +51,13 @@ public class OrderTest {
         // then
         Assertions.assertThat(createdOrder.isPresent()).isTrue();
         Assertions.assertThat(createdOrder.get().getId()).isEqualTo(order.getId());
-        Assertions.assertThat(createdOrder.get().getTotalPrice()).isEqualTo(59700);
+        Assertions.assertThat(createdOrder.get().getTotalPrice()).isEqualTo(60200);
     }
 
     public Cart dataSet() {
-        // menu 1
-        Cart.CartOption option_1 = new Cart.CartOption("뿌링뿌링소스", 1500);
-        Cart.CartOption option_2 = new Cart.CartOption("매콤소스", 1200);
-        Cart.CartOptionGroup optionGroup_1 = new Cart.CartOptionGroup("소스", option_1, option_2);
-
-        Cart.CartOption option_3 = new Cart.CartOption("뿌링치즈볼", 4500);
-        Cart.CartOption option_4 = new Cart.CartOption("매콤소떡", 3000);
-        Cart.CartOptionGroup optionGroup_2 = new Cart.CartOptionGroup("디저트", option_3, option_4);
-
-        Cart.CartItem item_1 = new Cart.CartItem(1L, "뿌링클 콤보", 1, 23000, optionGroup_1, optionGroup_2);
-
-        // menu 2
-        Cart.CartOption option_5 = new Cart.CartOption("뿌링치즈볼", 4500);
-        Cart.CartOptionGroup optionGroup_3 = new Cart.CartOptionGroup("디저트", option_5);
-
-        Cart.CartItem item_2 = new Cart.CartItem(2L, "마법클", 1, 22000, optionGroup_3);
-
-        Cart cart = new Cart(2L, 1L, item_1, item_2);
-
-        return cart;
+        crudStoreRepository.save(AStore.aOpenStore().build());
+        crudMenuRepository.save(AMenu.aMenu());
+        return ACart.cart();
     }
 
 }
