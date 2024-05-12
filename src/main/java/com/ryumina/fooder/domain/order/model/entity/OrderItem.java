@@ -3,6 +3,7 @@ package com.ryumina.fooder.domain.order.model.entity;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
@@ -34,14 +35,12 @@ public class OrderItem {
     @MappedCollection(idColumn = "ORDER_ITEM_ID", keyColumn = "ORDER_OPTION_GROUP_ID")
     private Set<OrderOptionGroup> orderOptionGroupList = new HashSet<>();
 
-    public OrderItem() {
-    }
-
     public OrderItem(Long menuId, String name, int price, int count, List<OrderOptionGroup> orderOptionGroupList) {
         this(null, menuId, name, price, count, orderOptionGroupList);
     }
 
     @Builder
+    @PersistenceCreator
     public OrderItem(Long id, Long menuId, String name, int price, int count, List<OrderOptionGroup> orderOptionGroupList) {
         this.id = id;
         this.menuId = menuId;

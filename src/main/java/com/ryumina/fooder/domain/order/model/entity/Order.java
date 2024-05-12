@@ -1,15 +1,17 @@
 package com.ryumina.fooder.domain.order.model.entity;
 
+import com.ryumina.fooder.domain.order.model.OrderHistory;
 import com.ryumina.fooder.domain.order.model.OrderStatus;
 import com.ryumina.fooder.domain.order.validator.OrderValidator;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Embedded;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -31,31 +33,29 @@ public class Order {
     @MappedCollection(idColumn = "ORDER_ID", keyColumn = "ORDER_ITEM_ID")
     private Set<OrderItem> orderItemList = new HashSet<>();
 
-    @Column("ORDERED_TIME")
-    private LocalDateTime orderDateTime;
+    @Embedded.Empty
+    private OrderHistory orderHistory;
 
     @Column("ORDER_STATUS")
     private OrderStatus orderStatus;
 
-    public Order() {
-    }
-
     public Order(Long userId, Long storeId, List<OrderItem> itemList) {
-        this(null, userId, storeId, itemList, LocalDateTime.now(), null);
+        this(null, userId, storeId, new OrderHistory(), itemList, OrderStatus.WAITING);
     }
 
     @Builder
-    public Order(Long id, Long userId, Long storeId, List<OrderItem> orderItemList,
-                 LocalDateTime orderDateTime, OrderStatus orderStatus) {
+    @PersistenceCreator
+    public Order(Long id, Long userId, Long storeId, OrderHistory orderHistory,
+                 List<OrderItem> orderItemList, OrderStatus orderStatus) {
         this.id = id;
         this.userId = userId;
         this.storeId = storeId;
-        this.orderDateTime = orderDateTime;
+        this.orderHistory = orderHistory;
         this.orderStatus = orderStatus;
         this.orderItemList.addAll(orderItemList);
     }
 
-    public void create(OrderValidator orderValidator) {
+    public void order(OrderValidator orderValidator) {
         orderValidator.validate(this);
         ordered();
     }
@@ -65,9 +65,9 @@ public class Order {
         this.orderStatus = OrderStatus.ORDERED;
     }
 
-    // 배달완료
-    public void delivered() {
-        this.orderStatus = OrderStatus.DELIVERED;
+    // 준비중
+    public void preparing() {
+        this.orderStatus = OrderStatus.PREPARING;
     }
 
     // 주문취소
