@@ -56,7 +56,7 @@ public class OrderTest {
 
     public Cart dataSet() {
         crudStoreRepository.save(AStore.aOpenStore().build());
-        crudMenuRepository.save(AMenu.aMenu());
+        crudMenuRepository.save(AMenu.aMenu().build());
         return ACart.cart();
     }
 

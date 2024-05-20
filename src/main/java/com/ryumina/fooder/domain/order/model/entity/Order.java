@@ -15,6 +15,7 @@ import org.springframework.data.relational.core.mapping.Table;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Table("ORDER")
 @Getter
@@ -77,5 +78,9 @@ public class Order {
 
     public int getTotalPrice() {
         return orderItemList.stream().mapToInt(OrderItem::getItemPrice).sum();
+    }
+
+    public List<Long> getMenuIdList() {
+        return this.getOrderItemList().stream().map(OrderItem::getId).collect(Collectors.toList());
     }
 }

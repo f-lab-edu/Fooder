@@ -8,62 +8,55 @@ import com.ryumina.fooder.domain.store.model.entity.OptionSpec;
 import java.util.Arrays;
 
 public class AMenu {
-    public static Menu aMenu() {
+    public static Menu.MenuBuilder aMenu() {
         return Menu.builder()
                    .name("뿌링클 콤보")
-                   .menuDescription(aMenuDescription())
+                   .menuDescription(aMenuDescription().build())
                    .storeId(1L)
+                   .quantity(100)
                    .price(23000)
-                   .optionGroupSpecs(Arrays.asList(anOptionGroupSpec_1(), anOptionGroupSpec_2()))
-                   .build();
+                   .optionGroupSpecs(Arrays.asList(anOptionGroupSpec_1().build(), anOptionGroupSpec_2().build()));
     }
 
-    public static MenuDescription aMenuDescription() {
+    public static MenuDescription.MenuDescriptionBuilder aMenuDescription() {
         return MenuDescription.builder()
                               .description("[윙 / 봉 / 닭다리 5조각씩 제공] 뿌링뿌링! 세상에 없던 마법의 맛 뿌링클, 퍽퍽한 닭가슴살 없이 윙, 봉, 닭다리만 담은 콤보")
-                              .baseMenuDescription("뿌링클 콤보, 치킨무 1개, 뿌링뿌링 소스 1개, 300ml 펩시콜라 1개")
-                              .build();
+                              .baseMenuDescription("뿌링클 콤보, 치킨무 1개, 뿌링뿌링 소스 1개, 300ml 펩시콜라 1개");
     }
 
-    public static OptionGroupSpec anOptionGroupSpec_1() {
+    public static OptionGroupSpec.OptionGroupSpecBuilder anOptionGroupSpec_1() {
         return OptionGroupSpec.builder()
                               .name("소스")
-                              .optionSpecs(Arrays.asList(anOptionSpec_1(), anOptionSpec_2()))
-                              .build();
+                              .optionSpecs(Arrays.asList(anOptionSpec_1().build(), anOptionSpec_2().build()));
     }
 
-    public static OptionSpec anOptionSpec_1() {
+    public static OptionSpec.OptionSpecBuilder anOptionSpec_1() {
         return OptionSpec.builder()
                          .name("뿌링뿌링소스")
-                         .price(1500)
-                         .build();
+                         .price(1500);
     }
 
-    public static OptionSpec anOptionSpec_2() {
+    public static OptionSpec.OptionSpecBuilder anOptionSpec_2() {
         return OptionSpec.builder()
                          .name("매콤소스")
-                         .price(1200)
-                         .build();
+                         .price(1200);
     }
 
-    public static OptionGroupSpec anOptionGroupSpec_2() {
+    public static OptionGroupSpec.OptionGroupSpecBuilder anOptionGroupSpec_2() {
         return OptionGroupSpec.builder()
                               .name("디저트")
-                              .optionSpecs(Arrays.asList(anOptionSpec_3(), anOptionSpec_4()))
-                              .build();
+                              .optionSpecs(Arrays.asList(anOptionSpec_3().build(), anOptionSpec_4().build()));
     }
 
-    public static OptionSpec anOptionSpec_3() {
+    public static OptionSpec.OptionSpecBuilder anOptionSpec_3() {
         return OptionSpec.builder()
                          .name("뿌링치즈볼")
-                         .price(4500)
-                         .build();
+                         .price(4500);
     }
 
-    public static OptionSpec anOptionSpec_4() {
+    public static OptionSpec.OptionSpecBuilder anOptionSpec_4() {
         return OptionSpec.builder()
                          .name("매콤소떡")
-                         .price(3000)
-                         .build();
+                         .price(3000);
     }
 }

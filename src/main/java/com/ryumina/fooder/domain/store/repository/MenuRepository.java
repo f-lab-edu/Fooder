@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface MenuRepository {
     List<Menu> findByStoreId(Long storeId);
+
+    List<Menu> findAllById(List<Long> menuIdList);
 }
