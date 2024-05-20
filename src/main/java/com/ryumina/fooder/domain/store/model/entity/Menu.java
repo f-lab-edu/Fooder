@@ -31,6 +31,9 @@ public class Menu {
     @Column("STORE_ID")
     private Long storeId;
 
+    @Column("SALE_POSSIBLE_QUANTITY")
+    private int quantity;
+
     @Column("PRICE")
     private int price;
 
@@ -38,18 +41,20 @@ public class Menu {
     private Set<OptionGroupSpec> optionGroupSpecs = new HashSet<>();
 
     @Builder
-    public Menu(String name, MenuDescription menuDescription, Long storeId, int price, List<OptionGroupSpec> optionGroupSpecs) {
-        this(null, name, menuDescription, storeId, price, optionGroupSpecs);
+    public Menu(String name, MenuDescription menuDescription, Long storeId, int quantity,
+                int price, List<OptionGroupSpec> optionGroupSpecs) {
+        this(null, name, menuDescription, storeId, quantity, price, optionGroupSpecs);
     }
 
     @Builder
     @PersistenceCreator
     public Menu(Long id, String name, MenuDescription menuDescription,
-                Long storeId, int price, List<OptionGroupSpec> optionGroupSpecs) {
+                Long storeId, int quantity, int price, List<OptionGroupSpec> optionGroupSpecs) {
         this.id = id;
         this.name = name;
         this.menuDescription = menuDescription;
         this.storeId = storeId;
+        this.quantity = quantity;
         this.price = price;
         this.optionGroupSpecs.addAll(optionGroupSpecs);
     }

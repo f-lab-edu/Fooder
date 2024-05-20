@@ -130,7 +130,7 @@ class StoreServiceTest {
 
     public Store dataSet() {
         Store Store = crudStoreRepository.save(AStore.aOpenStore().build());
-        crudMenuRepository.save(AMenu.aMenu());
+        crudMenuRepository.save(AMenu.aMenu().build());
         return Store;
     }
 
