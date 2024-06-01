@@ -59,4 +59,23 @@ public class AMenu {
                          .name("매콤소떡")
                          .price(3000);
     }
+
+    // 메뉴2
+    public static Menu.MenuBuilder aMenu_2() {
+        return Menu.builder()
+                   .name("마법클")
+                   .menuDescription(aMenuDescription_2().build())
+                   .storeId(1L)
+                   .quantity(80)
+                   .price(22000)
+                   .optionGroupSpecs(Arrays.asList(anOptionGroupSpec_1().build(), anOptionGroupSpec_2().build()));
+    }
+
+    public static MenuDescription.MenuDescriptionBuilder aMenuDescription_2() {
+        return MenuDescription.builder()
+                              .description("마늘, 버터와 크런치한 후레이크의 마법같은 조합")
+                              .baseMenuDescription("마법클, 치킨무 1개, 300ml 펩시콜라 1개");
+    }
+
+
 }

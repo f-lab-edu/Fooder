@@ -10,7 +10,7 @@ import org.springframework.data.relational.core.mapping.Embedded;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -38,7 +38,7 @@ public class Menu {
     private int price;
 
     @MappedCollection(idColumn = "MENU_ID", keyColumn = "OPTION_GROUP_SPEC_ID")
-    private Set<OptionGroupSpec> optionGroupSpecs = new HashSet<>();
+    private Set<OptionGroupSpec> optionGroupSpecs = new LinkedHashSet<>();
 
     @Builder
     public Menu(String name, MenuDescription menuDescription, Long storeId, int quantity,

@@ -1,5 +1,6 @@
 package com.ryumina.fooder.domain.order.model.entity;
 
+import com.ryumina.fooder.domain.store.model.Option;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
@@ -31,6 +32,10 @@ public class OrderOption {
         this.id = id;
         this.name = name;
         this.price = price;
+    }
+
+    public Option convertToOption() {
+        return new Option(name, price);
     }
 
 }

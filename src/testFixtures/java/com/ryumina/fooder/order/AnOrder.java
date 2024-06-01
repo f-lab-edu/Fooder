@@ -1,12 +1,12 @@
 package com.ryumina.fooder.order;
 
-import com.ryumina.fooder.domain.order.model.OrderHistory;
 import com.ryumina.fooder.domain.order.model.entity.Order;
 import com.ryumina.fooder.domain.order.model.entity.OrderItem;
 import com.ryumina.fooder.domain.order.model.entity.OrderOption;
 import com.ryumina.fooder.domain.order.model.entity.OrderOptionGroup;
 
 import java.util.Arrays;
+import java.util.Set;
 
 public class AnOrder {
     // 하나의 order data 생성
@@ -15,8 +15,7 @@ public class AnOrder {
                     .id(1L)
                     .userId(1L)
                     .storeId(1L)
-                    .orderHistory(new OrderHistory())
-                    .orderItemList(Arrays.asList(anOrderItem().build()));
+                    .orderItemList(Set.of(anOrderItem().build()));
     }
 
     // 하나의 주문 메뉴 생성

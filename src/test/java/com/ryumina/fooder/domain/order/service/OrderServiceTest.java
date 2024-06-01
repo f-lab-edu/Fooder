@@ -1,9 +1,7 @@
-package com.ryumina.fooder.domain.order;
+package com.ryumina.fooder.domain.order.service;
 
 import com.ryumina.fooder.domain.order.infra.CrudOrderRepository;
 import com.ryumina.fooder.domain.order.model.entity.Order;
-import com.ryumina.fooder.domain.order.service.Cart;
-import com.ryumina.fooder.domain.order.service.OrderService;
 import com.ryumina.fooder.domain.store.infra.CrudMenuRepository;
 import com.ryumina.fooder.domain.store.infra.CrudStoreRepository;
 import com.ryumina.fooder.order.ACart;
@@ -18,7 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.Optional;
 
 @SpringBootTest
-public class OrderTest {
+public class OrderServiceTest {
 
     @Autowired
     private OrderService orderService;
@@ -57,6 +55,7 @@ public class OrderTest {
     public Cart dataSet() {
         crudStoreRepository.save(AStore.aOpenStore().build());
         crudMenuRepository.save(AMenu.aMenu().build());
+        crudMenuRepository.save(AMenu.aMenu_2().build());
         return ACart.cart();
     }
 

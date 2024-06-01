@@ -8,11 +8,11 @@ import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.relational.core.mapping.Column;
-import org.springframework.data.relational.core.mapping.Embedded;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
-import java.util.HashSet;
+import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -32,27 +32,25 @@ public class Order {
     private Long storeId;
 
     @MappedCollection(idColumn = "ORDER_ID", keyColumn = "ORDER_ITEM_ID")
-    private Set<OrderItem> orderItemList = new HashSet<>();
+    private Set<OrderItem> orderItemList = new LinkedHashSet<>();
 
-    @Embedded.Empty
-    private OrderHistory orderHistory;
+    @MappedCollection(idColumn = "ORDER_ID", keyColumn = "ORDER_HISTORY_ID")
+    private Set<OrderHistory> orderHistory = new LinkedHashSet<>();
 
-    @Column("ORDER_STATUS")
-    private OrderStatus orderStatus;
-
-    public Order(Long userId, Long storeId, List<OrderItem> itemList) {
-        this(null, userId, storeId, new OrderHistory(), itemList, OrderStatus.WAITING);
+    public Order(Long userId, Long storeId, Set<OrderItem> itemList) {
+        this(null, userId, storeId, itemList);
     }
 
     @Builder
     @PersistenceCreator
-    public Order(Long id, Long userId, Long storeId, OrderHistory orderHistory,
-                 List<OrderItem> orderItemList, OrderStatus orderStatus) {
+    public Order(Long id, Long userId, Long storeId, Set<OrderItem> orderItemList) {
         this.id = id;
         this.userId = userId;
         this.storeId = storeId;
-        this.orderHistory = orderHistory;
-        this.orderStatus = orderStatus;
+        this.orderHistory.add(OrderHistory.builder()
+                                          .orderStatus(OrderStatus.WAITING)
+                                          .txDateTime(LocalDateTime.now())
+                                          .build());
         this.orderItemList.addAll(orderItemList);
     }
 
@@ -63,17 +61,26 @@ public class Order {
 
     // 주문완료
     public void ordered() {
-        this.orderStatus = OrderStatus.ORDERED;
+        this.orderHistory.add(OrderHistory.builder()
+                                          .orderStatus(OrderStatus.ORDERED)
+                                          .txDateTime(LocalDateTime.now())
+                                          .build());
     }
 
     // 준비중
     public void preparing() {
-        this.orderStatus = OrderStatus.PREPARING;
+        this.orderHistory.add(OrderHistory.builder()
+                                          .orderStatus(OrderStatus.PREPARING)
+                                          .txDateTime(LocalDateTime.now())
+                                          .build());
     }
 
     // 주문취소
     public void canceled() {
-        this.orderStatus = OrderStatus.CANCELED;
+        this.orderHistory.add(OrderHistory.builder()
+                                          .orderStatus(OrderStatus.CANCELED)
+                                          .txDateTime(LocalDateTime.now())
+                                          .build());
     }
 
     public int getTotalPrice() {
@@ -81,6 +88,6 @@ public class Order {
     }
 
     public List<Long> getMenuIdList() {
-        return this.getOrderItemList().stream().map(OrderItem::getId).collect(Collectors.toList());
+        return this.getOrderItemList().stream().map(OrderItem::getMenuId).collect(Collectors.toList());
     }
 }
