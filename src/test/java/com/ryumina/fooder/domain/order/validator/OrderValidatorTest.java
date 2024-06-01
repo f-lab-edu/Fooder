@@ -20,8 +20,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collections;
-import java.util.List;
+import java.util.HashMap;
 
+// TODO: MOCK -> STUB 변경 필요
 @ExtendWith(MockitoExtension.class)
 class OrderValidatorTest {
 
@@ -46,9 +47,8 @@ class OrderValidatorTest {
         // given
         Store store = getANotOpenStore();
         Order order = getAnOrder();
-        List<Menu> menuList = List.of(AMenu.aMenu().build());
 
-        Assertions.assertThatThrownBy(() -> orderValidator.validate(order, store, menuList))
+        Assertions.assertThatThrownBy(() -> orderValidator.validate(order, store, new HashMap<>()))
                   .isInstanceOf(FooderBusinessException.class)
                   .hasMessageContaining("가게가 영업중이 아닙니다.");
 
@@ -59,10 +59,9 @@ class OrderValidatorTest {
     void isEmptyOrderItemList() {
         // given
         Store store = getAOpenStore();
-        Order order = AnOrder.order().orderItemList(Collections.emptyList()).build();
-        List<Menu> menuList = List.of(AMenu.aMenu().build());
+        Order order = AnOrder.order().orderItemList(Collections.emptySet()).build();
 
-        Assertions.assertThatThrownBy(() -> orderValidator.validate(order, store, menuList))
+        Assertions.assertThatThrownBy(() -> orderValidator.validate(order, store, new HashMap<>()))
                   .isInstanceOf(FooderBusinessException.class)
                   .hasMessageContaining("주문 항목이 비어 있습니다.");
 
@@ -74,9 +73,8 @@ class OrderValidatorTest {
         // given
         Store store = AStore.aOpenStore().minOrderPrice(50000).build();
         Order order = getAnOrder();
-        List<Menu> menuList = List.of(AMenu.aMenu().build());
 
-        Assertions.assertThatThrownBy(() -> orderValidator.validate(order, store, menuList))
+        Assertions.assertThatThrownBy(() -> orderValidator.validate(order, store, new HashMap<>()))
                   .isInstanceOf(FooderBusinessException.class)
                   .hasMessageContaining("최소 주문 금액을 만족하지 않습니다.");
 
@@ -89,11 +87,12 @@ class OrderValidatorTest {
         Store store = AStore.aOpenStore().build();
         Order order = AnOrder.order().build();
 
-        Assertions.assertThatThrownBy(() -> orderValidator.validate(order, store, null))
+        Assertions.assertThatThrownBy(() -> orderValidator.validate(order, store, new HashMap<>()))
                   .isInstanceOf(FooderBusinessException.class)
                   .hasMessageContaining("주문이 불가능한 메뉴입니다.");
     }
 
+//    TODO: 추후 STUB 객체를 이용하여 테스트 코드 작성 필요
 //    @DisplayName("메뉴가 품절된 경우 예외 발생 테스트")
 //    @Test
 //    void isNotPossibleOrder_noQuantity() {

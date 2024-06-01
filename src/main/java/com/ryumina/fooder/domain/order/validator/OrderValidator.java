@@ -13,7 +13,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import java.util.List;
+import java.util.Map;
+
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toMap;
 
 @Component
 @RequiredArgsConstructor
@@ -22,10 +25,11 @@ public class OrderValidator {
     private final MenuRepository menuRepository;
 
     public void validate(Order order) {
-        validate(order, getStore(order.getStoreId()), getMenuList(order.getMenuIdList()));
+        validate(order, getStore(order.getStoreId()), getMenus(order));
     }
 
-    void validate(Order order, Store store, List<Menu> menuList) {
+    // TODO: private 로 변경하여 테스트코드 작성 필요
+    void validate(Order order, Store store, Map<Long, Menu> menus) {
         if (!store.isOpen()) {
             throw new FooderBusinessException("가게가 영업중이 아닙니다.");
         }
@@ -38,38 +42,38 @@ public class OrderValidator {
             throw new FooderBusinessException("최소 주문 금액을 만족하지 않습니다.");
         }
 
-        // TODO: 해당 검증이 의미가 있는지?
-        // TODO: 카트에 담아뒀다가 시간이 어느정도 지난 후 주문하려고 하는데 메뉴가 삭제됐다거나..?
-        if (CollectionUtils.isEmpty(menuList)) {
+        if (CollectionUtils.isEmpty(menus)) {
             throw new FooderBusinessException("주문이 불가능한 메뉴입니다.");
         }
 
         for (OrderItem orderItem : order.getOrderItemList()) {
-            validateOrderItem(orderItem, menuList);
+            validateOrderItem(orderItem, menus.get(orderItem.getMenuId()));
         }
     }
 
-    private void validateOrderItem(OrderItem orderItem, List<Menu> menuList) {
-        Menu menuItem = menuList.stream()
-                                .filter(menu -> menu.getId().equals(orderItem.getId()))
-                                .findFirst().get();
-
-        if (!orderItem.getName().equals(menuItem.getName())) {
+    private void validateOrderItem(OrderItem orderItem, Menu menu) {
+        if (!menu.getName().equals(orderItem.getName())) {
             throw new FooderBusinessException("메뉴가 변경되었습니다.");
         }
 
-        if (menuItem.getQuantity() == 0) {
+        if (menu.getQuantity() == 0) {
             throw new FooderBusinessException("메뉴가 품절되었습니다.");
         }
 
         for (OrderOptionGroup orderOptionGroup : orderItem.getOrderOptionGroupList()) {
-            OptionGroupSpec optionGroupSpec = menuItem.getOptionGroupSpecs().stream()
-                                                      .filter(optionGroup -> optionGroup.getId().equals(orderOptionGroup.getId()))
-                                                      .findFirst().get();
+            validateOrderOptionGroup(orderOptionGroup, menu);
+        }
+    }
 
-            if (!orderOptionGroup.getName().equals(optionGroupSpec.getName())) {
-                throw new FooderBusinessException("옵션이 변경되었습니다.");
+    private void validateOrderOptionGroup(OrderOptionGroup orderOptionGroup, Menu menu) {
+        for (OptionGroupSpec optionGroupSpec : menu.getOptionGroupSpecs()) {
+            // 실제 db에 저장되어 있는 메뉴의 옵션과 고객이 주문한 메뉴의 옵션이 동일한지 검증
+            // (domain) order => store 객체로 변경하여 비교하기 위해 convert 과정을 진행
+            if (optionGroupSpec.isEqualsBy(orderOptionGroup.convertToOptionGroup())) {
+                return;
             }
+
+            throw new FooderBusinessException("메뉴가 변경되었습니다.");
         }
     }
 
@@ -77,8 +81,8 @@ public class OrderValidator {
         return storeRepository.findById(storeId);
     }
 
-    private List<Menu> getMenuList(List<Long> menuIdList) {
-        return menuRepository.findAllById(menuIdList);
+    private Map<Long, Menu> getMenus(Order order) {
+        return menuRepository.findAllById(order.getMenuIdList()).stream().collect(toMap(Menu::getId, identity()));
     }
 
 }

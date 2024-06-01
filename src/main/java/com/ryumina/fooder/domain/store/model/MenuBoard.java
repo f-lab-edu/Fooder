@@ -5,7 +5,7 @@ import com.ryumina.fooder.domain.store.model.entity.OptionGroupSpec;
 import com.ryumina.fooder.domain.store.model.entity.Store;
 import lombok.Getter;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -38,7 +38,7 @@ public class MenuBoard {
         private int menuBasePrice;
         private String menuDescription;
         private String baseMenuDescription;
-        private Set<OptionGroupSpec> optionGroupSpecList = new HashSet<>();
+        private Set<OptionGroupSpec> optionGroupSpecList = new LinkedHashSet<>();
 
         public MenuItem(Menu menu) {
             this.menuId = menu.getId();

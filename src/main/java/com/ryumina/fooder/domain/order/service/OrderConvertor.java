@@ -17,7 +17,7 @@ public class OrderConvertor {
                          cart.getCartItemList()
                              .stream()
                              .map(this::toOrderItem)
-                             .collect(Collectors.toList())
+                             .collect(Collectors.toSet())
         );
     }
 

@@ -8,7 +8,7 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -33,7 +33,7 @@ public class OrderItem {
     private int count;
 
     @MappedCollection(idColumn = "ORDER_ITEM_ID", keyColumn = "ORDER_OPTION_GROUP_ID")
-    private Set<OrderOptionGroup> orderOptionGroupList = new HashSet<>();
+    private Set<OrderOptionGroup> orderOptionGroupList = new LinkedHashSet<>();
 
     public OrderItem(Long menuId, String name, int price, int count, List<OrderOptionGroup> orderOptionGroupList) {
         this(null, menuId, name, price, count, orderOptionGroupList);

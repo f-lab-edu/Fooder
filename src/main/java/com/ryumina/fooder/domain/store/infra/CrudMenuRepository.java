@@ -8,6 +8,4 @@ import java.util.List;
 public interface CrudMenuRepository extends CrudRepository<Menu, Long> {
     List<Menu> findByStoreId(Long storeId);
 
-    List<Menu> findAllById();
-
 }
