@@ -19,19 +19,19 @@ public class ControllerExceptionHandler {
 
     // parameter binding fail
     @ExceptionHandler(value = {
-        MethodArgumentTypeMismatchException.class,
         BindException.class,
+        MethodArgumentTypeMismatchException.class,
         HttpMessageNotReadableException.class
     })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Response<?> wrongParameterException(HttpMessageNotReadableException e) {
+    public Response<?> wrongParameterException(Exception e) {
         return Response.fail(FailResult.WRONG_PARAMETER_EXCEPTION.getMessage()).build();
     }
 
     // parameter validation check fail
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Response<?> methodArgumentTypeMismatchException(MethodArgumentNotValidException e) {
+    public Response<?> MethodArgumentNotValidException(MethodArgumentNotValidException e) {
         ObjectError objectError = e.getBindingResult().getAllErrors().get(0);
         String message = objectError.getDefaultMessage();
 
