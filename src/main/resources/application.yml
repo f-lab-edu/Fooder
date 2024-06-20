@@ -1,12 +1,11 @@
 spring:
   application:
     name: fooder
-  datasource:
-    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    url: jdbc:log4jdbc:h2:mem:fooder;mode=mysql
-    username: sa
-    password:
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+  profiles:
+    group:
+      local: local
+      dev: dev
+      prod: prod
+
+server:
+  port: 8080

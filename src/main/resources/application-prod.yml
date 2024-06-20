@@ -1,0 +1,17 @@
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://db-nokra.vpc-cdb.ntruss.com:3306/fooder-prod?useSSL=false&serverTimezone=UTC
+    username: ${PROD_USERNAME}
+    password: ${PROD_PASSWORD}
+
+server:
+  port: 8080
+
+logging:
+  level:
+    root: WARN
