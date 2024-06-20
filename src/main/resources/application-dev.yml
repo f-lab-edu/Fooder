@@ -1,0 +1,17 @@
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://db-nokra.vpc-cdb.ntruss.com:3306/fooder-dev?useSSL=false&serverTimezone=UTC
+    username: ${DEV_USERNAME}
+    password: ${DEV_PASSWORD}
+
+server:
+  port: 8082
+
+logging:
+  level:
+    root: DEBUG
